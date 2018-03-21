@@ -33,7 +33,7 @@
         app:layout_constraintStart_toEndOf="@id/line3" />
 
     <TextView
-        android:id="@+id/tvYearsSerial"
+        android:id="@+id/tvTypeSerial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -43,14 +43,14 @@
         app:layout_constraintTop_toBottomOf="@id/tvNameSerial" />
 
     <TextView
-        android:id="@+id/tvTypeSerial"
+        android:id="@+id/tvYearsSerial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@id/line3"
-        app:layout_constraintTop_toBottomOf="@id/tvYearsSerial" />
+        app:layout_constraintTop_toBottomOf="@id/tvTypeSerial" />
 
     <TextView
         android:id="@+id/tvStatysSerial"
@@ -60,7 +60,7 @@
         android:layout_marginTop="5dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@id/line3"
-        app:layout_constraintTop_toBottomOf="@id/tvTypeSerial" />
+        app:layout_constraintTop_toBottomOf="@id/tvYearsSerial" />
 
     <TextView
         android:id="@+id/tvCoutSezon"

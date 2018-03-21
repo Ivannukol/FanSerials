@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SerialsHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION =4 ;
     public static final String DATABESE_NAME = "serialsdb";
     public static final String TABLE_CONTACTS = "serials";
 
@@ -18,16 +18,18 @@ public class SerialsHelper extends SQLiteOpenHelper {
     public static final String KEY_ID = "_id";
     public static final String KEY_NAME = "name";
     public static final String KEY_SEASONS = "seasons";
-    public static final String KEY_SERIES = "series";
+    public static final String KEY_SERIES = "activity_my_series";
     public static final String KEY_SEE = "see";
 
 
     public SerialsHelper(Context context) {
         super(context, DATABESE_NAME, null, DATABASE_VERSION);
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL("create table " + TABLE_CONTACTS + "(" +
                 KEY_ID + " integer primary key,"
                 + KEY_NAME + " text,"

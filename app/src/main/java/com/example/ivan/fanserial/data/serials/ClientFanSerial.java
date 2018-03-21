@@ -1,17 +1,22 @@
-package com.example.ivan.fanserial;
+package com.example.ivan.fanserial.data.serials;
 
 import android.graphics.drawable.Icon;
 import android.provider.MediaStore;
 
+import com.example.ivan.fanserial.Model.Genres;
 import com.example.ivan.fanserial.Model.PopularSerials;
 import com.example.ivan.fanserial.Model.Serials;
+import com.example.ivan.fanserial.MovieDB;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -27,6 +32,9 @@ public interface ClientFanSerial {
 
     @GET("/3/tv/popular?api_key=" + MovieDB.key + "&language=ru-ru&page=1")
     Observable<PopularSerials> reposSerialsPopular();
+
+    @GET("/3/genre/tv/list?api_key="+MovieDB.key+"&language=ru")
+    Observable<ArrayList<Genres>> reposSerialsGenres();
 
 
 }

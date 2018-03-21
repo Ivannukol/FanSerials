@@ -14,10 +14,12 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ivan.fanserial.Model.PopularSerials;
+import com.example.ivan.fanserial.InfoSerial;
+import com.example.ivan.fanserial.Model.Genres;
 import com.example.ivan.fanserial.Model.Result;
 import com.example.ivan.fanserial.Model.Serials;
 import com.example.ivan.fanserial.MovieDB;
+import com.example.ivan.fanserial.Present.PresentorRetrofiltr;
 import com.example.ivan.fanserial.R;
 import com.example.ivan.fanserial.helper.SerialsHelper;
 
@@ -30,89 +32,57 @@ import java.util.List;
 
 public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAdapter.SerialPopularViewHolder> {
 
-    private List<Result> data = new ArrayList<>();
-    private SQLiteDatabase database;
-    private SerialsHelper serialsHelper;
+    private List<Result> data;
+
     private Result item;
+
+
+    public SerialsPopularAdapter(List<Result> data) {
+        data = new ArrayList<>();
+        this.data = data;
+    }
 
     @Override
     public SerialPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        serialsHelper = new SerialsHelper(parent.getContext());
-
-        return new SerialPopularViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false));
+        Genres d = new Genres();
+        genres.clear();
+        d.setId(35);
+        d.setName("Комедія");
+        genres.add(d);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false);
+        return new SerialPopularViewHolder(v, data);
+        //new SerialPopularViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false));
     }
 
     @Override
     public void onBindViewHolder(SerialPopularViewHolder holder, int position) {
-
-
+        if (holder instanceof SerialPopularViewHolder) {
+            SerialPopularViewHolder rowHolder = (SerialPopularViewHolder) holder;
+        }
         item = data.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(MovieDB.imageUrl + item.getPoster_path())
                 .into(holder.imPoster);
         holder.tvName.setText(item.getName());
+        holder.tvTypeSerial.setText(getGenres(item.getGenre_ids()));
+        //    holder.tvTypeSerial.setText(item.getGenre_ids().get(0)+" ");
 
-        final ImageView dotMenu = holder.dotMenu;
-
-        holder.dotMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(dotMenu.getContext(), holder.dotMenu);
-
-                popup.inflate(R.menu.serials);
-
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem items) {
-                        database = serialsHelper.getWritableDatabase();
-                        ContentValues contentValues = new ContentValues();
-                        switch (items.getItemId()) {
-                            case R.id.itListAdd: {
-
-                                // contentValues.put(SerialsHelper.KEY_ID,item.getId());
-                               /* contentValues.put(SerialsHelper.KEY_NAME, item.getName());
-                                contentValues.put(SerialsHelper.KEY_SEASONS, 1);
-                                contentValues.put(SerialsHelper.KEY_SERIES, 1);
-                                contentValues.put(SerialsHelper.KEY_SEE, 1);
-                                database.insert(SerialsHelper.TABLE_CONTACTS, null, contentValues);*/
-                                Log.d("mLog",  item.getName());
-
-                                database.close();
-
-
-                                //  Log.d("MyLog", "add" + data.get(position).getName());
-                                return true;
-                            }
-                            case R.id.itAboutSeries: {
-                                Cursor cursor = database.query(SerialsHelper.TABLE_CONTACTS, null, null, null, null, null, null);
-                                if (cursor.moveToFirst()) {
-                                    int idIndex = cursor.getColumnIndex(SerialsHelper.KEY_ID);
-                                    int nameIndex = cursor.getColumnIndex(SerialsHelper.KEY_NAME);
-                                    do {
-                                        Log.d("mLog", "Id = " + cursor.getInt(idIndex) +
-                                                ", name = " + cursor.getString(nameIndex)
-                                        );
-
-                                    } while (cursor.moveToNext());
-                                } else {
-                                    Log.d("mLog", "0 row");
-                                }
-                                cursor.close();
-                                Log.d("MyLog", "about1111");
-                                database.close();
-
-                                return true;
-                            }
-
-                        }
-                        return false;
-                    }
-                });
-
-                popup.show();
-            }
-        });
     }
+
+    public static final ArrayList<Genres> genres = new ArrayList<>();
+
+    private String getGenres(ArrayList<Integer> genre) {
+        String s = "";
+        for (Integer i : genre) {
+            for (Genres g : genres)
+                if (g.getId() == i)
+                    s += " " + g.getName();
+        }
+
+
+        return s;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -124,23 +94,110 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         notifyDataSetChanged();
     }
 
-    class SerialPopularViewHolder extends RecyclerView.ViewHolder {
+
+    class SerialPopularViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, InfoSerial {
         ImageView imPoster, dotMenu;
-        TextView tvName;
+        TextView tvName, tvTypeSerial;
+        private SQLiteDatabase database;
+        private SerialsHelper serialsHelper;
+        private List<Result> data = new ArrayList<>();
 
-        public SerialPopularViewHolder(View itemView) {
-            super(itemView);
-            imPoster = itemView.findViewById(R.id.imPoster);
-            tvName = itemView.findViewById(R.id.tvNameSerial);
-            dotMenu = itemView.findViewById(R.id.dotMenu);
-            // itemView.registerForContextMenu(tvName);
-            // itemView.setOnCreateContextMenuListener();       //dotMenu=itemView.findViewById(R.id.dotMenu);
+        public SerialPopularViewHolder(View v, List<Result> data) {
+            super(v);
+            this.data = data;
+            v.setOnClickListener(this);
+            imPoster = v.findViewById(R.id.imPoster);
+            tvName = v.findViewById(R.id.tvNameSerial);
+            dotMenu = v.findViewById(R.id.dotMenu);
+            tvTypeSerial = v.findViewById(R.id.tvTypeSerial);
+        }
 
-            // itemView.setOnCreateContextMenuListener(this);
+
+        @Override
+        public void onClick(View v) {
+            Log.d("Mylog", "onClick " + data.get(getAdapterPosition()).getName() + " hhh");
+
+            dotMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    serialsHelper = new SerialsHelper(v.getContext());
+
+                    popupMenu(v);
+                }
+            });
+
 
         }
 
-    }
 
+        void popupMenu(View v) {
+
+            PopupMenu popup = new PopupMenu(dotMenu.getContext(), dotMenu);
+
+            popup.inflate(R.menu.serials);
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem items) {
+
+                    switch (items.getItemId()) {
+                        case R.id.itListAdd: {
+
+                            PresentorRetrofiltr presentorRetrofiltr = new PresentorRetrofiltr(data.get(getAdapterPosition()).getId(), SerialPopularViewHolder.this);
+
+                            //  Log.d("MyLog", "add" + data.get(position).getName());
+                            return true;
+                        }
+                        case R.id.itAboutSeries: {
+                            database = serialsHelper.getWritableDatabase();
+                            ContentValues contentValues = new ContentValues();
+                            Cursor cursor = database.query(SerialsHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                            if (cursor.moveToFirst()) {
+                                int idIndex = cursor.getColumnIndex(SerialsHelper.KEY_ID);
+                                int nameIndex = cursor.getColumnIndex(SerialsHelper.KEY_NAME);
+                                do {
+                                    Log.d("mLog", "Id = " + cursor.getInt(idIndex) +
+                                            ", name = " + cursor.getString(nameIndex)
+                                    );
+
+                                } while (cursor.moveToNext());
+                            } else {
+                                Log.d("mLog", "0 row");
+                            }
+                            cursor.close();
+                            Log.d("MyLog", "about1111");
+                            database.close();
+
+                            return true;
+                        }
+
+                    }
+                    return false;
+                }
+            });
+
+            popup.show();
+
+
+        }
+
+
+        @Override
+        public void showPopular(Serials serials) {
+            database = serialsHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(SerialsHelper.KEY_ID, data.get(getAdapterPosition()).getId());
+            contentValues.put(SerialsHelper.KEY_NAME, data.get(getAdapterPosition()).getName());
+            contentValues.put(SerialsHelper.KEY_SEASONS, 1);
+            contentValues.put(SerialsHelper.KEY_SERIES, 1);
+            contentValues.put(SerialsHelper.KEY_SEE, 1);
+            database.insert(SerialsHelper.TABLE_CONTACTS, null, contentValues);
+            Log.d("mLog", data.get(getAdapterPosition()).getName());
+
+            database.close();
+        }
+
+
+    }
 
 }
