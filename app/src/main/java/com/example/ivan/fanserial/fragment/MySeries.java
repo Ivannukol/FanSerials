@@ -1,4 +1,4 @@
-package com.example.ivan.fanserial;
+package com.example.ivan.fanserial.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,15 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Ivan on 21.03.2018.
- */
+import com.example.ivan.fanserial.R;
 
-public class Serial extends Fragment {
+public class MySeries extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_serial, null);
+        return inflater.inflate(R.layout.activity_my_series, null);
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Serials {
+    private int id;
     private String name;
     private ArrayList<Seasons> seasons;
     private String overview;
@@ -16,6 +17,14 @@ public class Serials {
     private Genres[] genres;
     private int number_of_episodes;
     private int number_of_seasons;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

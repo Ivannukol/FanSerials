@@ -4,19 +4,16 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.ivan.fanserial.Present.PresentorRetrofiltr;
-import com.example.ivan.fanserial.PresentIntrfes.RetrofiltrContractView;
-import com.example.ivan.fanserial.adapter.SerialsPopularAdapter;
+import com.example.ivan.fanserial.fragment.MySeries;
+import com.example.ivan.fanserial.fragment.NewSeries;
+import com.example.ivan.fanserial.fragment.Serial;
 
 
-public class MainActivity extends AppCompatActivity implements RetrofiltrContractView {
-    PresentorRetrofiltr presentorRetrofiltr;
+public class MainActivity extends AppCompatActivity   {
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fTrans;
     Serial serial;
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements RetrofiltrContrac
         fTrans.commit();
 
 
-        presentorRetrofiltr = new PresentorRetrofiltr(this);
+
         bottomNavigationView = findViewById(R.id.navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -48,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements RetrofiltrContrac
                             menuItem = menu.getItem(0);
                             Log.d("mLog","menu");
                             fTrans.replace(R.id.frgmCont, serial);
-                            presentorRetrofiltr = new PresentorRetrofiltr(this);
 
                             break;
                         case R.id.iMyList:
@@ -72,13 +68,6 @@ public class MainActivity extends AppCompatActivity implements RetrofiltrContrac
                 }
         );
 
-    }
-
-    @Override
-    public void showRecyclerView(SerialsPopularAdapter data) {
-        RecyclerView rv = findViewById(R.id.rvSerials);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(data);
     }
 
 }

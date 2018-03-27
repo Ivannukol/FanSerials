@@ -11,10 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class SerialModel {
-    ClientFanSerial clientFanSerialPopulation = new Retrofit.Builder()
+    public ClientFanSerial clientFanSerialPopulation = new Retrofit.Builder()
             .baseUrl(MovieDB.url)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build().create(ClientFanSerial.class);
 
+
+    public ClientFanSerial retrofitSerialsPopulation = new Retrofit.Builder()
+            .baseUrl(MovieDB.url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build().create(ClientFanSerial.class);
 }

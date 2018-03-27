@@ -1,10 +1,12 @@
-package com.example.ivan.fanserial;
+package com.example.ivan.fanserial.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.ivan.fanserial.R;
 
 public class NewSeries extends Fragment {
 

@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MySeries" />
-        <activity android:name=".NewSeries"></activity>
+        <activity android:name=".fragment.MySeries" />
+        <activity android:name=".fragment.NewSeries"></activity>
     </application>
 
 </manifest>

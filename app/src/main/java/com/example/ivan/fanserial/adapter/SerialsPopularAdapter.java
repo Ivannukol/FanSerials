@@ -14,12 +14,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ivan.fanserial.InfoSerial;
 import com.example.ivan.fanserial.Model.Genres;
 import com.example.ivan.fanserial.Model.Result;
-import com.example.ivan.fanserial.Model.Serials;
 import com.example.ivan.fanserial.MovieDB;
-import com.example.ivan.fanserial.Present.PresentorRetrofiltr;
 import com.example.ivan.fanserial.R;
 import com.example.ivan.fanserial.helper.SerialsHelper;
 
@@ -32,15 +29,10 @@ import java.util.List;
 
 public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAdapter.SerialPopularViewHolder> {
 
-    private List<Result> data;
+    private List<Result> data = new ArrayList<>();
 
     private Result item;
 
-
-    public SerialsPopularAdapter(List<Result> data) {
-        data = new ArrayList<>();
-        this.data = data;
-    }
 
     @Override
     public SerialPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -95,7 +87,7 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
     }
 
 
-    class SerialPopularViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, InfoSerial {
+    class SerialPopularViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imPoster, dotMenu;
         TextView tvName, tvTypeSerial;
         private SQLiteDatabase database;
@@ -131,33 +123,37 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
 
 
         void popupMenu(View v) {
-
             PopupMenu popup = new PopupMenu(dotMenu.getContext(), dotMenu);
-
             popup.inflate(R.menu.serials);
-
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem items) {
 
                     switch (items.getItemId()) {
                         case R.id.itListAdd: {
+                            Log.d("myLog",data.get(getAdapterPosition()).getId()+"g    "+data.get(getAdapterPosition()).getName());
+                            database = serialsHelper.getWritableDatabase();
 
-                            PresentorRetrofiltr presentorRetrofiltr = new PresentorRetrofiltr(data.get(getAdapterPosition()).getId(), SerialPopularViewHolder.this);
-
-                            //  Log.d("MyLog", "add" + data.get(position).getName());
+                            ContentValues contentValues = new ContentValues();
+                            contentValues.put(SerialsHelper.KEY_IDSERIALS, data.get(getAdapterPosition()).getId());
+                            contentValues.put(SerialsHelper.KEY_NAME, data.get(getAdapterPosition()).getName());
+                            database.insert(SerialsHelper.TABLE_SERIALS, null, contentValues);
+                            database.close();
                             return true;
                         }
                         case R.id.itAboutSeries: {
                             database = serialsHelper.getWritableDatabase();
                             ContentValues contentValues = new ContentValues();
-                            Cursor cursor = database.query(SerialsHelper.TABLE_CONTACTS, null, null, null, null, null, null);
+                            Cursor cursor = database.query(SerialsHelper.TABLE_SERIALS, null, null, null, null, null, null);
                             if (cursor.moveToFirst()) {
-                                int idIndex = cursor.getColumnIndex(SerialsHelper.KEY_ID);
+                                int idIndex = cursor.getColumnIndex(SerialsHelper.KEY_IDSERIALS);
                                 int nameIndex = cursor.getColumnIndex(SerialsHelper.KEY_NAME);
+
+
                                 do {
                                     Log.d("mLog", "Id = " + cursor.getInt(idIndex) +
                                             ", name = " + cursor.getString(nameIndex)
+
                                     );
 
                                 } while (cursor.moveToNext());
@@ -180,23 +176,6 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
 
 
         }
-
-
-        @Override
-        public void showPopular(Serials serials) {
-            database = serialsHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(SerialsHelper.KEY_ID, data.get(getAdapterPosition()).getId());
-            contentValues.put(SerialsHelper.KEY_NAME, data.get(getAdapterPosition()).getName());
-            contentValues.put(SerialsHelper.KEY_SEASONS, 1);
-            contentValues.put(SerialsHelper.KEY_SERIES, 1);
-            contentValues.put(SerialsHelper.KEY_SEE, 1);
-            database.insert(SerialsHelper.TABLE_CONTACTS, null, contentValues);
-            Log.d("mLog", data.get(getAdapterPosition()).getName());
-
-            database.close();
-        }
-
 
     }
 
