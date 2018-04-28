@@ -1,4 +1,4 @@
-package com.example.ivan.fanserial.Model;
+package com.example.ivan.fanserial.model;
 
 /**
  * Created by Ivan on 23.03.2018.
@@ -10,6 +10,24 @@ public class Episodes {
     private String name;
     private int id;
     private int season_number;
+    private String nameSerial;
+    private String poster;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getNameSerial() {
+        return nameSerial;
+    }
+
+    public void setNameSerial(String nameSerial) {
+        this.nameSerial = nameSerial;
+    }
 
     public String getAir_date() {
         return air_date;

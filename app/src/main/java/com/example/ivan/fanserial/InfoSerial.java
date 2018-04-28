@@ -1,9 +1,7 @@
 package com.example.ivan.fanserial;
 
-import com.example.ivan.fanserial.Model.Genres;
-import com.example.ivan.fanserial.Model.Serials;
+import com.example.ivan.fanserial.model.Serials;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface InfoSerial {
-    void showPopular(Serials serials);
+    void showPopular(ArrayList<Serials> serials);
 
 }
 

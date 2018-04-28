@@ -23,4 +23,10 @@ public class SerialModel {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build().create(ClientFanSerial.class);
+
+    public   ClientFanSerial genres = new Retrofit.Builder()
+            .baseUrl(MovieDB.url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build().create(ClientFanSerial.class);
 }

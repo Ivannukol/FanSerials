@@ -1,6 +1,6 @@
 package com.example.ivan.fanserial.ui.main;
 
-import com.example.ivan.fanserial.Model.Result;
+import com.example.ivan.fanserial.model.Result;
 
 import java.util.ArrayList;
 

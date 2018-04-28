@@ -1,4 +1,4 @@
-package com.example.ivan.fanserial.Model;
+package com.example.ivan.fanserial.model;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,42 @@ public class Result {
     private double vote_average;
     private String poster_path;
     private String backdrop_path;
+    private ArrayList<Genres> genres = new ArrayList();
+    private String first_air_date;
+    private String original_name;
+    private ArrayList<Episodes> episodes;
+
+    public ArrayList<Episodes> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(ArrayList<Episodes> episodes) {
+        this.episodes = episodes;
+    }
+
+    public String getOriginal_name() {
+        return original_name;
+    }
+
+    public void setOriginal_name(String original_name) {
+        this.original_name = original_name;
+    }
+
+    public String getFirst_air_date() {
+        return first_air_date;
+    }
+
+    public void setFirst_air_date(String first_air_date) {
+        this.first_air_date = first_air_date;
+    }
+
+    public ArrayList<Genres> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(ArrayList<Genres> genres) {
+        this.genres = genres;
+    }
 
     public String getBackdrop_path() {
         return backdrop_path;

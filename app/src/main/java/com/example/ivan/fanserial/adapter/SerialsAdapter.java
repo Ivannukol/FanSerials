@@ -1,17 +1,14 @@
 package com.example.ivan.fanserial.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ivan.fanserial.Model.Serials;
+import com.example.ivan.fanserial.model.Serials;
 import com.example.ivan.fanserial.MovieDB;
 import com.example.ivan.fanserial.R;
 
@@ -39,38 +36,6 @@ public class SerialsAdapter extends RecyclerView.Adapter<SerialsAdapter.SerialVi
                 .into(holder.imPoster);
         holder.tvName.setText(item.getName());
 
-        final ImageView dotMenu = holder.dotMenu;
-
-        holder.dotMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(dotMenu.getContext(), holder.dotMenu);
-
-                popup.inflate(R.menu.serials);
-
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.itListAdd: {
-                                Log.d("MyLog","add");
-                                return true;
-                            }
-                            case R.id.itAboutSeries: {
-                                Log.d("MyLog","about");
-
-                                return true;
-                            }
-
-                        }
-                        return false;
-                    }
-                });
-
-                popup.show();
-            }
-        });
-
     }
 
     @Override
@@ -92,10 +57,6 @@ public class SerialsAdapter extends RecyclerView.Adapter<SerialsAdapter.SerialVi
             imPoster = itemView.findViewById(R.id.imPoster);
             tvName = itemView.findViewById(R.id.tvNameSerial);
             dotMenu = itemView.findViewById(R.id.dotMenu);
-            // itemView.registerForContextMenu(tvName);
-            // itemView.setOnCreateContextMenuListener();       //dotMenu=itemView.findViewById(R.id.dotMenu);
-
-            // itemView.setOnCreateContextMenuListener(this);
         }
 
     }

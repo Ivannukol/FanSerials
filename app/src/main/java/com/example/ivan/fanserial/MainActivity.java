@@ -8,27 +8,30 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.ivan.fanserial.fragment.MySeries;
-import com.example.ivan.fanserial.fragment.NewSeries;
-import com.example.ivan.fanserial.fragment.Serial;
+import com.example.ivan.fanserial.fragment.MySeriesFragment;
+import com.example.ivan.fanserial.fragment.NewSeriesFragment;
+import com.example.ivan.fanserial.fragment.SerialFragment;
 
 
 public class MainActivity extends AppCompatActivity   {
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fTrans;
-    Serial serial;
-    NewSeries newSeries;
-    MySeries mySeries;
+    SerialFragment serialFragment;
+    NewSeriesFragment newSeriesFragment;
+    MySeriesFragment mySeriesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serial = new Serial();
-        newSeries = new NewSeries();
-        mySeries = new MySeries();
+
+
+        serialFragment = new SerialFragment();
+        newSeriesFragment = new NewSeriesFragment();
+        mySeriesFragment = new MySeriesFragment();
+
         fTrans = getFragmentManager().beginTransaction();
-        fTrans.add(R.id.frgmCont, serial);
+        fTrans.add(R.id.frgmCont, serialFragment);
         fTrans.commit();
 
 
@@ -44,20 +47,21 @@ public class MainActivity extends AppCompatActivity   {
                         case R.id.iList:
                             menuItem = menu.getItem(0);
                             Log.d("mLog","menu");
-                            fTrans.replace(R.id.frgmCont, serial);
+                            fTrans.replace(R.id.frgmCont, serialFragment);
 
                             break;
                         case R.id.iMyList:
                             menuItem = menu.getItem(1);
 
-                            fTrans.replace(R.id.frgmCont, mySeries);
+                            fTrans.replace(R.id.frgmCont, mySeriesFragment);
+
                             break;
 
 
                         case R.id.iNewSeries:
                             menuItem = menu.getItem(2);
 
-                            fTrans.replace(R.id.frgmCont, newSeries);
+                            fTrans.replace(R.id.frgmCont, newSeriesFragment);
                             break;
 
                     }

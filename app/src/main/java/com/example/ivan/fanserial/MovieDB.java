@@ -1,9 +1,5 @@
 package com.example.ivan.fanserial;
 
-import com.example.ivan.fanserial.Model.Genres;
-
-import java.util.ArrayList;
-
 /**
  * Created by Ivan on 12.03.2018.
  */

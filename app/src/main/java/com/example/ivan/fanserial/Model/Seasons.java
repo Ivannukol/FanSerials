@@ -1,4 +1,4 @@
-package com.example.ivan.fanserial.Model;
+package com.example.ivan.fanserial.model;
 
 /**
  * Created by Ivan on 06.03.2018.

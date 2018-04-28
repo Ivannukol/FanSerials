@@ -1,12 +1,9 @@
 package com.example.ivan.fanserial.adapter;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,11 +11,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.ivan.fanserial.Model.Genres;
-import com.example.ivan.fanserial.Model.Result;
+import com.example.ivan.fanserial.model.Genres;
+import com.example.ivan.fanserial.model.GetGenresResponse;
+import com.example.ivan.fanserial.model.Result;
 import com.example.ivan.fanserial.MovieDB;
 import com.example.ivan.fanserial.R;
-import com.example.ivan.fanserial.helper.SerialsHelper;
+import com.example.ivan.fanserial.data.serials.Genrest;
+import com.example.ivan.fanserial.data.serials.GetGenres;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,52 +26,70 @@ import java.util.List;
  * Created by Ivan on 12.03.2018.
  */
 
-public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAdapter.SerialPopularViewHolder> {
+public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAdapter.SerialPopularViewHolder> implements Genrest {
 
     private List<Result> data = new ArrayList<>();
 
     private Result item;
-
+    public ArrayList<Genres> genres = new ArrayList<>();
+    public boolean expand = false;
+    public AdapterAction adapterAction = null;
+    private boolean hide = true;
+    GetGenresResponse getGenresResponse = new GetGenresResponse();
 
     @Override
     public SerialPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Genres d = new Genres();
-        genres.clear();
-        d.setId(35);
-        d.setName("Комедія");
-        genres.add(d);
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false);
-        return new SerialPopularViewHolder(v, data);
-        //new SerialPopularViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false));
+        return new SerialPopularViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(SerialPopularViewHolder holder, int position) {
-        if (holder instanceof SerialPopularViewHolder) {
-            SerialPopularViewHolder rowHolder = (SerialPopularViewHolder) holder;
-        }
         item = data.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(MovieDB.imageUrl + item.getPoster_path())
                 .into(holder.imPoster);
+        holder.tvReting.setText("");
+        holder.tvTypeSerial.setText("");
         holder.tvName.setText(item.getName());
-        holder.tvTypeSerial.setText(getGenres(item.getGenre_ids()));
-        //    holder.tvTypeSerial.setText(item.getGenre_ids().get(0)+" ");
+        holder.tvTypeSerial.setText(item.getGenres().toString() + "");
+        holder.tvYearsSerial.setText(item.getFirst_air_date());
+        holder.tvReting.setText("Райтинг: " + item.getVote_average());
+        holder.tvOriginalName.setText(item.getOriginal_name());
 
-    }
+        if (expand) {
+            holder.tvName.setText(item.getOriginal_name());
+            holder.tvOriginalName.setText("");
+            holder.tvTypeSerial.setText(item.getName());
+            holder.tvReting.setText("");
+            holder.adapter = new TVAdapter();
+            holder.rvTV.setAdapter(holder.adapter);
+            holder.adapter.setData(item.getEpisodes());
+            holder.rvTV.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
+            holder.rvTV.requestFocus();
 
-    public static final ArrayList<Genres> genres = new ArrayList<>();
-
-    private String getGenres(ArrayList<Integer> genre) {
-        String s = "";
-        for (Integer i : genre) {
-            for (Genres g : genres)
-                if (g.getId() == i)
-                    s += " " + g.getName();
-        }
+        }else
 
 
-        return s;
+        holder.dotMenu.setOnClickListener(v ->
+                {
+                    popupMenu(v, item,position);
+                }
+
+        );
+
+        holder.constraintLayout.setOnClickListener(v -> {
+            if (expand) {
+               holder.rvTV.setVisibility(View.VISIBLE);
+                hide = !hide;
+
+                if (hide)
+                    holder.rvTV.setVisibility(View.GONE);
+
+            }
+        });
+
     }
 
 
@@ -81,102 +98,73 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         return data.size();
     }
 
+
     public void setData(List<Result> result) {
+        GetGenres getGenres = new GetGenres(this);
+        getGenres.getGenrest();
         data.addAll(result);
         notifyDataSetChanged();
     }
 
+    @Override
+    public void setGenres(GetGenresResponse getGenresResponse) {
+        this.getGenresResponse = getGenresResponse;
+    }
 
-    class SerialPopularViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private void popupMenu(View v, Result item,int position) {
+        PopupMenu popup = new PopupMenu(v.getContext(), v);
+        popup.inflate(R.menu.serials);
+        popup.setOnMenuItemClickListener(items -> {
+            switch (items.getItemId()) {
+                case R.id.itListAdd: {
+                    if (adapterAction != null)
+                        adapterAction.onAddToFavoriteClick(data.get(position));
+                    return true;
+                }
+               /* case R.id.itAboutSeries: {
+                    if (adapterAction != null)
+                        adapterAction.onAboutSerialClick(item);
+                    return true;
+                }*/
+
+            }
+            return false;
+        });
+
+        popup.show();
+
+
+    }
+
+
+    class SerialPopularViewHolder extends RecyclerView.ViewHolder {
         ImageView imPoster, dotMenu;
-        TextView tvName, tvTypeSerial;
-        private SQLiteDatabase database;
-        private SerialsHelper serialsHelper;
-        private List<Result> data = new ArrayList<>();
+        TextView tvName, tvTypeSerial, tvYearsSerial, tvReting, tvOriginalName;
+        RecyclerView rvTV, rvNewSerial;
+        TVAdapter adapter;
+        ConstraintLayout constraintLayout;
 
-        public SerialPopularViewHolder(View v, List<Result> data) {
+        public SerialPopularViewHolder(View v) {
             super(v);
-            this.data = data;
-            v.setOnClickListener(this);
+            constraintLayout = v.findViewById(R.id.clSerialsItem);
+
             imPoster = v.findViewById(R.id.imPoster);
-            tvName = v.findViewById(R.id.tvNameSerial);
             dotMenu = v.findViewById(R.id.dotMenu);
+            rvTV = v.findViewById(R.id.rvTV);
+            rvNewSerial = v.findViewById(R.id.rvNewSerial);
             tvTypeSerial = v.findViewById(R.id.tvTypeSerial);
-        }
-
-
-        @Override
-        public void onClick(View v) {
-            Log.d("Mylog", "onClick " + data.get(getAdapterPosition()).getName() + " hhh");
-
-            dotMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    serialsHelper = new SerialsHelper(v.getContext());
-
-                    popupMenu(v);
-                }
-            });
-
-
-        }
-
-
-        void popupMenu(View v) {
-            PopupMenu popup = new PopupMenu(dotMenu.getContext(), dotMenu);
-            popup.inflate(R.menu.serials);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem items) {
-
-                    switch (items.getItemId()) {
-                        case R.id.itListAdd: {
-                            Log.d("myLog",data.get(getAdapterPosition()).getId()+"g    "+data.get(getAdapterPosition()).getName());
-                            database = serialsHelper.getWritableDatabase();
-
-                            ContentValues contentValues = new ContentValues();
-                            contentValues.put(SerialsHelper.KEY_IDSERIALS, data.get(getAdapterPosition()).getId());
-                            contentValues.put(SerialsHelper.KEY_NAME, data.get(getAdapterPosition()).getName());
-                            database.insert(SerialsHelper.TABLE_SERIALS, null, contentValues);
-                            database.close();
-                            return true;
-                        }
-                        case R.id.itAboutSeries: {
-                            database = serialsHelper.getWritableDatabase();
-                            ContentValues contentValues = new ContentValues();
-                            Cursor cursor = database.query(SerialsHelper.TABLE_SERIALS, null, null, null, null, null, null);
-                            if (cursor.moveToFirst()) {
-                                int idIndex = cursor.getColumnIndex(SerialsHelper.KEY_IDSERIALS);
-                                int nameIndex = cursor.getColumnIndex(SerialsHelper.KEY_NAME);
-
-
-                                do {
-                                    Log.d("mLog", "Id = " + cursor.getInt(idIndex) +
-                                            ", name = " + cursor.getString(nameIndex)
-
-                                    );
-
-                                } while (cursor.moveToNext());
-                            } else {
-                                Log.d("mLog", "0 row");
-                            }
-                            cursor.close();
-                            Log.d("MyLog", "about1111");
-                            database.close();
-
-                            return true;
-                        }
-
-                    }
-                    return false;
-                }
-            });
-
-            popup.show();
-
-
+            tvName = v.findViewById(R.id.tvNameSerial);
+            tvReting = v.findViewById(R.id.tvReting);
+            tvYearsSerial = v.findViewById(R.id.tvYearsSerial);
+            tvOriginalName = v.findViewById(R.id.tvOriginalName);
         }
 
     }
 
+
+    public interface AdapterAction {
+        void onAddToFavoriteClick(Result item);
+
+        void onAboutSerialClick(Result item);
+    }
 }
