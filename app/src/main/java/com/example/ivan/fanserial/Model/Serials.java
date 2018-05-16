@@ -1,5 +1,7 @@
 package com.example.ivan.fanserial.model;
 
+import com.example.ivan.fanserial.data.serials.GetGenres;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +19,24 @@ public class Serials {
     private Genres[] genres;
     private int number_of_episodes;
     private int number_of_seasons;
+    private String original_name;
+    private Double vote_average;
+
+    public Double getVote_average() {
+        return vote_average;
+    }
+
+    public void setVote_average(Double vote_average) {
+        this.vote_average = vote_average;
+    }
+
+    public String getOriginal_name() {
+        return original_name;
+    }
+
+    public void setOriginal_name(String original_name) {
+        this.original_name = original_name;
+    }
 
     public int getId() {
         return id;
@@ -97,4 +117,6 @@ public class Serials {
     public void setNumber_of_seasons(int number_of_seasons) {
         this.number_of_seasons = number_of_seasons;
     }
+
+
 }

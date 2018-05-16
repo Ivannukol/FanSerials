@@ -44,7 +44,7 @@ public class DaoSeasons {
                 }
             } while (cursor.moveToNext());
         } else {
-            Log.d("mLog", "0 row");
+            Log.d("mLog", "0 row Seasons");
         }
         cursor.close();
         database.close();
@@ -54,7 +54,7 @@ public class DaoSeasons {
     public boolean add(int idSesons, int idSerials, int number, int see) {
         database = serialsHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-    //    contentValues.put(SerialsHelper.KEY_IDSESONS, idSesons);
+        contentValues.put(SerialsHelper.KEY_IDSESONS, idSesons);
         contentValues.put(SerialsHelper.KEY_IDSERIALS, idSerials);
         contentValues.put(SerialsHelper.KEY_SEASONS_NUMBER, number);
         contentValues.put(SerialsHelper.KEY_SEASONS_SEE, see);

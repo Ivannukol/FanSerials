@@ -1,10 +1,12 @@
 package com.example.ivan.fanserial.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Ivan on 23.03.2018.
  */
 
-public class Episodes {
+public class Episodes  implements Serializable {
     private String air_date;
     private int episode_number;
     private String name;

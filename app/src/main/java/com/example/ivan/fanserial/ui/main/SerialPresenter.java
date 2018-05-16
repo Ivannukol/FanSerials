@@ -1,8 +1,12 @@
 package com.example.ivan.fanserial.ui.main;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
+import android.view.View;
 
+import com.example.ivan.fanserial.About;
 import com.example.ivan.fanserial.FanSerialApplication;
 import com.example.ivan.fanserial.helper.dao.DaoSerials;
 import com.example.ivan.fanserial.model.Genres;
@@ -16,6 +20,8 @@ import java.util.Collections;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by Ivan on 18.03.2018.
@@ -36,8 +42,14 @@ public class SerialPresenter {
         daoSerials.add(item.getId(), item.getName(), 0);
     }
 
-    public void getPopularSerials() {
-        serialModel.clientFanSerialPopulation.reposSerialsPopular(1)
+    public void onAboutSerial(Result item, View v) {
+        Intent in = new Intent(v.getContext(), About.class);
+        in.putExtra("result", item);
+       v.getContext().startActivity(in);
+    }
+
+    public void getPopularSerials(int page) {
+        serialModel.clientFanSerialPopulation.reposSerialsPopular(page)
                 .subscribeOn(Schedulers.io())
                 .flatMap(seriasl -> serialModel.genres.reposSerialsGenres()
                                 .map(t -> t.getGenres())
@@ -66,5 +78,6 @@ public class SerialPresenter {
     private void serialsP(PopularSerials popularSerials) {
         view.setSerials(popularSerials.getResults());
     }
+
 
 }

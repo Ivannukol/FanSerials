@@ -11,6 +11,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.ivan.fanserial.helper.dao.DaoSeries;
+import com.example.ivan.fanserial.model.Episodes;
 import com.example.ivan.fanserial.model.Genres;
 import com.example.ivan.fanserial.model.GetGenresResponse;
 import com.example.ivan.fanserial.model.Result;
@@ -29,9 +31,7 @@ import java.util.List;
 public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAdapter.SerialPopularViewHolder> implements Genrest {
 
     private List<Result> data = new ArrayList<>();
-
     private Result item;
-    public ArrayList<Genres> genres = new ArrayList<>();
     public boolean expand = false;
     public AdapterAction adapterAction = null;
     private boolean hide = true;
@@ -39,7 +39,6 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
 
     @Override
     public SerialPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_items_serials, parent, false);
         return new SerialPopularViewHolder(v);
     }
@@ -53,9 +52,12 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         holder.tvReting.setText("");
         holder.tvTypeSerial.setText("");
         holder.tvName.setText(item.getName());
-        holder.tvTypeSerial.setText(item.getGenres().toString() + "");
+        String elementName = "";
+        for (Genres t : item.getGenres())
+            elementName += t.getName() + " ";
+        holder.tvTypeSerial.setText(elementName);
         holder.tvYearsSerial.setText(item.getFirst_air_date());
-        holder.tvReting.setText("Райтинг: " + item.getVote_average());
+        holder.tvReting.setText("Рейтинг: " + item.getVote_average());
         holder.tvOriginalName.setText(item.getOriginal_name());
 
         if (expand) {
@@ -68,20 +70,24 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
             holder.adapter.setData(item.getEpisodes());
             holder.rvTV.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
             holder.rvTV.requestFocus();
+            holder.dotMenu.setOnClickListener(v ->
+                    {
+                        popupMenuSeeSesons(v, position);
+                    }
 
-        }else
 
+            );
+        } else
+            holder.dotMenu.setOnClickListener(v ->
+                    {
+                        popupMenuInfo(v, position);
+                    }
 
-        holder.dotMenu.setOnClickListener(v ->
-                {
-                    popupMenu(v, item,position);
-                }
-
-        );
+            );
 
         holder.constraintLayout.setOnClickListener(v -> {
             if (expand) {
-               holder.rvTV.setVisibility(View.VISIBLE);
+                holder.rvTV.setVisibility(View.VISIBLE);
                 hide = !hide;
 
                 if (hide)
@@ -89,6 +95,24 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
 
             }
         });
+
+    }
+
+    private void popupMenuSeeSesons(View v, int position) {
+
+        PopupMenu popup = new PopupMenu(v.getContext(), v);
+        popup.inflate(R.menu.see_sesons);
+        popup.setOnMenuItemClickListener(items -> {
+
+            DaoSeries daoSeries = new DaoSeries();
+            for (Episodes e : data.get(position).getEpisodes())
+                daoSeries.add(e.getId(), e.getEpisode_number(), e.getSeason_number(), e.getSeason_number());
+            data.remove(position);
+            notifyDataSetChanged();
+            return true;
+        });
+
+        popup.show();
 
     }
 
@@ -103,7 +127,22 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         GetGenres getGenres = new GetGenres(this);
         getGenres.getGenrest();
         data.addAll(result);
+        /*if (data.size() > 100) {
+            for (int i = 0; i < 20; i++)
+                data.remove(0);
+
+
+        }*/
         notifyDataSetChanged();
+
+    }
+
+    public void setElement(List<Result> result) {
+
+        if (result.size() != 0) {
+            data.add(result.get(0));
+        }else
+        data.addAll(result);
     }
 
     @Override
@@ -111,7 +150,7 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         this.getGenresResponse = getGenresResponse;
     }
 
-    private void popupMenu(View v, Result item,int position) {
+    private void popupMenuInfo(View v, int position) {
         PopupMenu popup = new PopupMenu(v.getContext(), v);
         popup.inflate(R.menu.serials);
         popup.setOnMenuItemClickListener(items -> {
@@ -121,11 +160,11 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
                         adapterAction.onAddToFavoriteClick(data.get(position));
                     return true;
                 }
-               /* case R.id.itAboutSeries: {
+                case R.id.itAboutSeries: {
                     if (adapterAction != null)
-                        adapterAction.onAboutSerialClick(item);
+                        adapterAction.onAboutSerialClick(data.get(position), v);
                     return true;
-                }*/
+                }
 
             }
             return false;
@@ -165,6 +204,6 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
     public interface AdapterAction {
         void onAddToFavoriteClick(Result item);
 
-        void onAboutSerialClick(Result item);
+        void onAboutSerialClick(Result item, View v);
     }
 }

@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SerialsHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 18;
+    public static final int DATABASE_VERSION = 20;
     public static final String DATABESE_NAME = "serialsdb";
 
     public static final String TABLE_SERIALS = "serials";

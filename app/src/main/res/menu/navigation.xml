@@ -3,13 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/iList"
-        android:title="каталог" />
+    android:id="@+id/iList"
+    android:title="@string/catalog"
+    android:enabled="true"
+    />
     <item
         android:id="@+id/iMyList"
-        android:title="мій список" />
+        android:title="@string/newSeries"
+        android:enabled="true"
+
+        />
 
     <item
         android:id="@+id/iNewSeries"
-        android:title="нові серії" />
+        android:title="@string/newSesons"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/iListSerials"
+        android:title="@string/mySerials"
+        android:enabled="true"
+        />
 </menu>

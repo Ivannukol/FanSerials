@@ -1,12 +1,16 @@
 package com.example.ivan.fanserial.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Ivan on 12.03.2018.
  */
 
-public class Result {
+public class Result implements Serializable {
     private String name;
     private ArrayList<Integer> genre_ids;
     private int id;
@@ -17,6 +21,15 @@ public class Result {
     private String first_air_date;
     private String original_name;
     private ArrayList<Episodes> episodes;
+    private String overview;
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 
     public ArrayList<Episodes> getEpisodes() {
         return episodes;
@@ -98,5 +111,33 @@ public class Result {
         this.poster_path = poster_path;
     }
 
+/*
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeValue(genre_ids);
+        dest.writeInt(id);
+        dest.writeDouble(vote_average);
+        dest.writeString(poster_path);
+        dest.writeString(backdrop_path);
+        dest.writeValue(genres);
+        dest.writeString(first_air_date);
+        dest.writeString(original_name);
+        dest.writeValue(episodes);
+   }*/
 }
+  /*  private String name;
+    private ArrayList<Integer> genre_ids;
+    private int id;
+    private double vote_average;
+    private String poster_path;
+    private String backdrop_path;
+    private ArrayList<Genres> genres = new ArrayList();
+    private String first_air_date;
+    private String original_name;
+    private ArrayList<Episodes> episodes;*/

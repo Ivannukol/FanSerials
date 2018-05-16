@@ -1,10 +1,12 @@
 package com.example.ivan.fanserial.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Ivan on 07.03.2018.
  */
 
-public class Genres {
+public class Genres  implements Serializable {
     private String name;
     private int id;
     private int size = 0;
@@ -34,10 +36,6 @@ public class Genres {
 
     @Override
     public String toString() {
- /*       size += name.length();
-        if (size > 15){
-            size=0;
-            return "\n" + name;}*/
-        return name + " ";
+         return name + " ";
     }
 }

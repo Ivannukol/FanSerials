@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.ivan.fanserial.FanSerialApplication;
+import com.example.ivan.fanserial.helper.dao.DaoSeasons;
 import com.example.ivan.fanserial.helper.dao.DaoSeries;
 import com.example.ivan.fanserial.model.Episodes;
 import com.example.ivan.fanserial.R;
@@ -23,10 +24,8 @@ import java.util.ArrayList;
 
 public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
     public ArrayList<Episodes> data = new ArrayList<>();
-    private SQLiteDatabase database;
-    private SerialsHelper serialsHelper;
-    // public AdapterActionTVA adapterActionTva = null;
     View v;
+    ArrayList<Integer> idSeria = new ArrayList<>();
 
     @Override
     public TVViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,13 +57,18 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
                 .setCancelable(false)
                 .setPositiveButton("Tак",
                         (dialog, id) -> {
-                          idSeria.add(data.get(position).getId());
-
+                            idSeria.add(data.get(position).getId());
                             DaoSeries daoSeries = new DaoSeries();
-                            daoSeries.add(data.get(position).getId(), data.get(position).getEpisode_number(),data.get(position).getSeason_number(), data.get(position).getSeason_number());
+                            daoSeries.add(data.get(position).getId(), data.get(position).getEpisode_number(), data.get(position).getSeason_number(), data.get(position).getSeason_number());
                             for (int i = 0; i < idSeria.size(); i++) {
                                 for (int j = 0; j < data.size(); j++) {
                                     if (data.get(j).getId() == idSeria.get(i)) {
+                                        if (data.size() == 1) {
+                                            DaoSeasons daoSeasons = new DaoSeasons();
+                                            daoSeasons.add(data.get(0).getId(), 0, data.get(0).getSeason_number(), 1);
+
+
+                                        }
                                         data.remove(j);
                                     }
                                 }
@@ -82,7 +86,6 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
         alert.show();
     }
 
-    ArrayList<Integer> idSeria = new ArrayList<>();
 
     @Override
     public int getItemCount() {
@@ -90,7 +93,6 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
     }
 
     public void setData(ArrayList<Episodes> data) {
-        serialsHelper = new SerialsHelper(FanSerialApplication.getInstanse());
         this.data = data;
         notifyDataSetChanged();
     }
