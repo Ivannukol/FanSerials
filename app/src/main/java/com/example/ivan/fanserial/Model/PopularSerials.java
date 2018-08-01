@@ -1,4 +1,4 @@
-package com.example.ivan.fanserial.model;
+package com.example.ivan.fanserial.Model;
 
 import java.util.ArrayList;
 

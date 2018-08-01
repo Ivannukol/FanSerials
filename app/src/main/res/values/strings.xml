@@ -1,9 +1,3 @@
 <resources>
     <string name="app_name">FanSerial</string>
-    <string name="title_activity_series">Series</string>
-    <string name="catalog">каталог</string>
-    <string name="newSeries">нові</string>
-    <string name="newSesons">серії</string>
-    <string name="mySerials">серіали</string>
-    <string name="seeSesons" >відмітити весь сезон</string>
 </resources>

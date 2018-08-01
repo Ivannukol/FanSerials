@@ -1,67 +1,18 @@
-package com.example.ivan.fanserial.model;
+package com.example.ivan.fanserial.Model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Ivan on 12.03.2018.
  */
 
-public class Result implements Serializable {
+public class Result {
     private String name;
     private ArrayList<Integer> genre_ids;
     private int id;
     private double vote_average;
     private String poster_path;
     private String backdrop_path;
-    private ArrayList<Genres> genres = new ArrayList();
-    private String first_air_date;
-    private String original_name;
-    private ArrayList<Episodes> episodes;
-    private String overview;
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public ArrayList<Episodes> getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(ArrayList<Episodes> episodes) {
-        this.episodes = episodes;
-    }
-
-    public String getOriginal_name() {
-        return original_name;
-    }
-
-    public void setOriginal_name(String original_name) {
-        this.original_name = original_name;
-    }
-
-    public String getFirst_air_date() {
-        return first_air_date;
-    }
-
-    public void setFirst_air_date(String first_air_date) {
-        this.first_air_date = first_air_date;
-    }
-
-    public ArrayList<Genres> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(ArrayList<Genres> genres) {
-        this.genres = genres;
-    }
 
     public String getBackdrop_path() {
         return backdrop_path;
@@ -111,33 +62,5 @@ public class Result implements Serializable {
         this.poster_path = poster_path;
     }
 
-/*
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeValue(genre_ids);
-        dest.writeInt(id);
-        dest.writeDouble(vote_average);
-        dest.writeString(poster_path);
-        dest.writeString(backdrop_path);
-        dest.writeValue(genres);
-        dest.writeString(first_air_date);
-        dest.writeString(original_name);
-        dest.writeValue(episodes);
-   }*/
 }
-  /*  private String name;
-    private ArrayList<Integer> genre_ids;
-    private int id;
-    private double vote_average;
-    private String poster_path;
-    private String backdrop_path;
-    private ArrayList<Genres> genres = new ArrayList();
-    private String first_air_date;
-    private String original_name;
-    private ArrayList<Episodes> episodes;*/
