@@ -17,7 +17,11 @@ import com.example.ivan.fanserial.R;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
+//серії які скоро вийдуть
+=======
 
+>>>>>>> origin/dev
 public class MySeriesAdapter extends RecyclerView.Adapter<MySeriesAdapter.MySeriesHolder> {
    List<Episodes> date = new ArrayList<>();
 

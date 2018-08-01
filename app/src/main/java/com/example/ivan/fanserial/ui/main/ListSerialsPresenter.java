@@ -43,10 +43,20 @@ public class ListSerialsPresenter {
         listSerialsFragment.setListSerials(serials);
     }
 
+<<<<<<< HEAD
+    public boolean getDbSerial() {
+        serialsDB = new ArrayList<>();
+        DaoSerials daoSerials = new DaoSerials();
+        serialsDB.addAll(daoSerials.select());
+        if (serialsDB.size()==0)
+            return false;
+        return true;
+=======
     public void getDbSerial() {
         serialsDB = new ArrayList<>();
         DaoSerials daoSerials = new DaoSerials();
         serialsDB.addAll(daoSerials.select());
+>>>>>>> origin/dev
     }
 
 

@@ -71,7 +71,11 @@ public class SerialPresenter {
 
                         })
                 .observeOn(AndroidSchedulers.mainThread())
+<<<<<<< HEAD
+                .subscribe(t->{view.setSerials(t.getResults());}
+=======
                 .subscribe(this::serialsP
+>>>>>>> origin/dev
                         , Throwable::printStackTrace);
     }
 

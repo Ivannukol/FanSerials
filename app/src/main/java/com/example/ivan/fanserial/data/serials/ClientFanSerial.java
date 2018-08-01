@@ -23,7 +23,11 @@ public interface ClientFanSerial {
     @GET("/3/tv/popular?api_key=" + MovieDB.key + "&language=ru-ru}")
     Observable<PopularSerials> reposSerialsPopular(@Query("page") int page);
 
+<<<<<<< HEAD
+    @GET("/3/genre/tv/list?api_key=" + MovieDB.key +"&language=ru")
+=======
     @GET("/3/genre/tv/list?api_key=c87afad022683444d24949b33d3d0cb6&language=ru")
+>>>>>>> origin/dev
     Observable<GetGenresResponse> reposSerialsGenres();
 
     @GET("/3/tv/{tv_id}/season/{season_number}?api_key="+MovieDB.key+"&language=ru")
