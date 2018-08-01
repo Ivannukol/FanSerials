@@ -20,7 +20,10 @@ import com.example.ivan.fanserial.MovieDB;
 import com.example.ivan.fanserial.R;
 import com.example.ivan.fanserial.data.serials.Genrest;
 import com.example.ivan.fanserial.data.serials.GetGenres;
+<<<<<<< HEAD
 import com.example.ivan.fanserial.ui.main.NewSerialPresenter;
+=======
+>>>>>>> origin/dev
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,8 +61,13 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         holder.tvName.setText(item.getName());
         String elementName = "";
         for (Genres t : item.getGenres())
+<<<<<<< HEAD
            // elementName += t.getName() + " ";
         holder.tvTypeSerial.append(t.getName() + " ");//setText(elementName);
+=======
+            elementName += t.getName() + " ";
+        holder.tvTypeSerial.setText(elementName);
+>>>>>>> origin/dev
         holder.tvYearsSerial.setText(item.getFirst_air_date());
         holder.tvReting.setText("Рейтинг: " + item.getVote_average());
         holder.tvOriginalName.setText(item.getOriginal_name());
@@ -71,6 +79,7 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
             holder.tvReting.setText("");
             holder.adapter = new TVAdapter();
             holder.rvTV.setAdapter(holder.adapter);
+<<<<<<< HEAD
             for (int i = 0; i < item.getEpisodes().size(); i++) {
                 if (item.getEpisodes().get(i).getAir_date() != null) {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -90,6 +99,8 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
             }
 
 
+=======
+>>>>>>> origin/dev
             holder.adapter.setData(item.getEpisodes());
             holder.rvTV.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext()));
             holder.rvTV.requestFocus();
@@ -152,16 +163,34 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
         GetGenres getGenres = new GetGenres(this);
         getGenres.getGenrest();
         data.addAll(result);
+<<<<<<< HEAD
 
+=======
+        /*if (data.size() > 100) {
+            for (int i = 0; i < 20; i++)
+                data.remove(0);
+
+
+        }*/
+>>>>>>> origin/dev
         notifyDataSetChanged();
 
     }
 
+<<<<<<< HEAD
     public int setElement(List<Result> result, NewSerialPresenter newSerialPresent, int position) {
         data.addAll(result);
             newSerialPresent.getDetalisSeasons(position);
             position++;
         return position;
+=======
+    public void setElement(List<Result> result) {
+
+        if (result.size() != 0) {
+            data.add(result.get(0));
+        }else
+        data.addAll(result);
+>>>>>>> origin/dev
     }
 
     @Override
@@ -184,6 +213,7 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
                         adapterAction.onAboutSerialClick(data.get(position), v);
                     return true;
                 }
+<<<<<<< HEAD
 
             }
             return false;
@@ -194,6 +224,18 @@ public class SerialsPopularAdapter extends RecyclerView.Adapter<SerialsPopularAd
 
     }
 
+=======
+
+            }
+            return false;
+        });
+
+        popup.show();
+
+
+    }
+
+>>>>>>> origin/dev
 
     class SerialPopularViewHolder extends RecyclerView.ViewHolder {
         ImageView imPoster, dotMenu;

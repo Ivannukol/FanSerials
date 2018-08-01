@@ -26,7 +26,11 @@ public class MySeriesPresenter {
     private NewSeriesModel newSeriesModel;
     private MySeriesViwe mySeriesViwe;
 
+<<<<<<< HEAD
     ArrayList<SerialsDB> serialsDB;
+=======
+    ArrayList<SerialsDB>serialsDB;
+>>>>>>> origin/dev
 
     public MySeriesPresenter(MySeriesViwe mySeriesViwe) {
         this.mySeriesViwe = mySeriesViwe;
@@ -82,6 +86,7 @@ public class MySeriesPresenter {
     }
 
 
+<<<<<<< HEAD
     public boolean getDbSerial() {
         serialsDB = new ArrayList<>();
         DaoSerials daoSerials = new DaoSerials();
@@ -89,6 +94,13 @@ public class MySeriesPresenter {
         if (serialsDB.size() == 0)
             return false;
         return true;
+=======
+    public void getDbSerial() {
+        serialsDB= new ArrayList<>();
+        DaoSerials daoSerials=new DaoSerials();
+       serialsDB.addAll(daoSerials.select());
+
+>>>>>>> origin/dev
 
     }
 }

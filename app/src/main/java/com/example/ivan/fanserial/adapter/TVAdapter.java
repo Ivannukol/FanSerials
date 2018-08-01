@@ -20,10 +20,14 @@ import com.example.ivan.fanserial.R;
 import com.example.ivan.fanserial.helper.SerialsHelper;
 
 
+<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+=======
+import java.util.ArrayList;
+>>>>>>> origin/dev
 
 public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
     public ArrayList<Episodes> data = new ArrayList<>();
@@ -41,10 +45,18 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
     @Override
     public void onBindViewHolder(TVViewHolder holder, int position) {
         Episodes episodes = data.get(position);
+<<<<<<< HEAD
 
         holder.tvName.setText(episodes.getName());
         holder.tvNumber.setText(episodes.getSeason_number() + "×" + episodes.getEpisode_number());
         holder.tvDate.setText(episodes.getAir_date().toString());
+=======
+        //Log.d("mylog", episodes.getName() + " children" + position);
+        holder.tvName.setText(episodes.getName());
+        holder.tvNumber.setText(episodes.getSeason_number() + "×" + episodes.getEpisode_number());
+        holder.tvDate.setText(episodes.getAir_date().toString());
+
+>>>>>>> origin/dev
         holder.seria.setOnClickListener(t -> {
             dilog(v, position);
         });
@@ -91,7 +103,10 @@ public class TVAdapter extends RecyclerView.Adapter<TVAdapter.TVViewHolder> {
 
     @Override
     public int getItemCount() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/dev
         return data.size();
     }
 

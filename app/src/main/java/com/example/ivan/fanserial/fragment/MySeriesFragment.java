@@ -1,7 +1,12 @@
 package com.example.ivan.fanserial.fragment;
 
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+=======
+import android.app.Fragment;
+import android.os.Bundle;
+>>>>>>> origin/dev
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ivan.fanserial.FanSerialApplication;
+<<<<<<< HEAD
 import com.example.ivan.fanserial.R;
 import com.example.ivan.fanserial.adapter.MySeriesAdapter;
 import com.example.ivan.fanserial.model.Episodes;
@@ -20,6 +26,17 @@ import com.example.ivan.fanserial.ui.main.MySeriesViwe;
 
 import java.util.List;
 //серії які скоро вийдуть
+=======
+import com.example.ivan.fanserial.adapter.SerialsPopularAdapter;
+import com.example.ivan.fanserial.model.Episodes;
+import com.example.ivan.fanserial.R;
+import com.example.ivan.fanserial.adapter.MySeriesAdapter;
+import com.example.ivan.fanserial.ui.main.MySeriesViwe;
+import com.example.ivan.fanserial.ui.main.MySeriesPresenter;
+
+import java.util.List;
+
+>>>>>>> origin/dev
 public class MySeriesFragment extends Fragment implements MySeriesViwe {
     private MySeriesAdapter mySeriesAdapter;
     private RecyclerView rv;
@@ -70,6 +87,7 @@ public class MySeriesFragment extends Fragment implements MySeriesViwe {
 
     private void getList() {
         if (FanSerialApplication.isConnectedToInternet()) {
+<<<<<<< HEAD
 
             if(mySeriesPresenter.getDbSerial()) {
                 progressBar.setVisibility(ProgressBar.VISIBLE);
@@ -85,6 +103,10 @@ public class MySeriesFragment extends Fragment implements MySeriesViwe {
 
 
 
+=======
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            mySeriesPresenter.getDateSeries();
+>>>>>>> origin/dev
         } else {
             Toast.makeText(v.getContext(), "Інтернет відсутній", (int) 2).show();
             progressBar.setVisibility(ProgressBar.GONE);

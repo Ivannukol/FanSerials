@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+<<<<<<< HEAD
         android:id="@+id/iList"
         android:enabled="true"
         android:icon="@drawable/ic_home_black_24dp"
@@ -14,11 +15,22 @@
         android:enabled="true"
         android:title="@string/newSeries"
         android:icon="@drawable/ic_notifications_active_black_24dp"
+=======
+    android:id="@+id/iList"
+    android:title="@string/catalog"
+    android:enabled="true"
+    />
+    <item
+        android:id="@+id/iMyList"
+        android:title="@string/newSeries"
+        android:enabled="true"
+>>>>>>> origin/dev
 
         />
 
     <item
         android:id="@+id/iNewSeries"
+<<<<<<< HEAD
         android:enabled="true"
         android:title="@string/newSesons"
         android:icon="@drawable/ic_play_circle_outline_black_24dp"
@@ -30,5 +42,14 @@
         android:title="@string/mySerials"
         android:icon="@drawable/ic_drag_handle_black_24dp"
 
+=======
+        android:title="@string/newSesons"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/iListSerials"
+        android:title="@string/mySerials"
+        android:enabled="true"
+>>>>>>> origin/dev
         />
 </menu>
