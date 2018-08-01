@@ -2,9 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clSerialsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+    android:layout_marginTop="5dp"
+
+    >
 
     <android.support.constraint.Guideline
         android:id="@+id/line3"
@@ -16,8 +19,9 @@
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imPoster"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="100dp"
+        android:maxHeight="200dp"
+        app:layout_constraintBottom_toTopOf="@id/rvTV"
         app:layout_constraintEnd_toStartOf="@id/line3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,17 +32,21 @@
         android:id="@+id/tvNameSerial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@id/line3" />
 
     <TextView
-        android:id="@+id/tvYearsSerial"
+        android:id="@+id/tvOriginalName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:gravity="right"
-        android:text="TextView"
+        android:text="@string/app_name"
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/dev
         app:layout_constraintStart_toEndOf="@id/line3"
         app:layout_constraintTop_toBottomOf="@id/tvNameSerial" />
 
@@ -46,42 +54,62 @@
         android:id="@+id/tvTypeSerial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:gravity="right"
+        android:maxEms="15"
+        android:singleLine="true"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@id/line3"
-        app:layout_constraintTop_toBottomOf="@id/tvYearsSerial" />
+        app:layout_constraintTop_toBottomOf="@id/tvOriginalName" />
+
 
     <TextView
-        android:id="@+id/tvStatysSerial"
+        android:id="@+id/tvReting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@id/line3"
         app:layout_constraintTop_toBottomOf="@id/tvTypeSerial" />
 
+
     <TextView
-        android:id="@+id/tvCoutSezon"
+        android:id="@+id/tvYearsSerial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:text="@string/app_name"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/line3"
-        app:layout_constraintTop_toBottomOf="@id/tvStatysSerial" />
-
+        app:layout_constraintTop_toBottomOf="@id/tvTypeSerial" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/dotMenu"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
+        android:gravity="right"
         android:src="@drawable/ic_more_vert_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imPoster"
+        tools:listitem="@layout/my_item_new_serie"
+        tools:visibility="visible"
+        />
 
 </android.support.constraint.ConstraintLayout>

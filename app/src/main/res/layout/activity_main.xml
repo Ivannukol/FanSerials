@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,20 +7,29 @@
     android:orientation="vertical"
     tools:context="com.example.ivan.fanserial.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvSerials"
+    <FrameLayout
+        android:id="@+id/frgmCont"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/my_items_serials" />
+        android:layout_above="@id/InnerRelativeLayout"
+
+        ></FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/InnerRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
 
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray"
+            app:menu="@menu/navigation" />
 
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
