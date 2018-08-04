@@ -4,6 +4,6 @@
 
     <item android:title="Додати в мій список"
         android:id="@+id/itListAdd"/>
-    <item android:title="Про серіал"
+   <item android:title="Про серіал"
         android:id="@+id/itAboutSeries"/>
 </menu>

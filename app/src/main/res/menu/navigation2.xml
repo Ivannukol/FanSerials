@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/action_home"
+            android:enabled="true"
+
+            android:title="@string/catalog" />
+        <item
+            android:id="@+id/action_car"
+            android:enabled="true"
+
+            android:title="@string/newSeries" />
+        <item
+            android:id="@+id/action_bike"
+            android:enabled="true"
+
+            android:title="@string/newSesons" />
+
+        <item
+            android:id="@+id/action_walk"
+            android:enabled="true"
+
+            android:title="@string/mySerials" />
+
+</menu>
