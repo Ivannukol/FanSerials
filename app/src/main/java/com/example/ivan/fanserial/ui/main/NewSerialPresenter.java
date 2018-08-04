@@ -28,41 +28,13 @@ import io.reactivex.schedulers.Schedulers;
 public class NewSerialPresenter {
     private NewSerialViwe viwe;
     private NewSeriesModel newSeriesModel;
-<<<<<<< HEAD
-    private ArrayList<SerialsDB> serialsDB;
-    private ArrayList<SeriesDB> seriesDB;
-    private ArrayList<SeasonsDB> seasonsDB;
-    private boolean flag = true;
-=======
     ArrayList<SerialsDB> serialsDB;
     ArrayList<SeriesDB> seriesDB;
     ArrayList<SeasonsDB> seasonsDB;
->>>>>>> origin/dev
 
     public NewSerialPresenter(NewSerialViwe viwe) {
         this.viwe = viwe;
         newSeriesModel = new NewSeriesModel();
-<<<<<<< HEAD
-        getDbSerial();
-        getDbSeasons();
-    }
-
-
-    public void getDetalisSeasons(int i) {
-        if (serialsDB.size() - 1 >= i)
-
-            newSeriesModel.serials.reposSerials(serialsDB.get(i).get_idSerials())
-                    .subscribeOn(Schedulers.io())
-                    .flatMap(seriasl -> io.reactivex.Observable.range(1, seriasl.getNumber_of_seasons())
-                            .subscribeOn(Schedulers.io()).flatMap(t -> (
-                                    newSeriesModel.detalisSesons.reposDetalisSeasons(seriasl.getId(), t))), (seriasl, genres) -> {
-                        genres.setOriginal_name(seriasl.getName());
-                        return genres;
-                    }).toList()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::getSerial
-                            , Throwable::printStackTrace);
-=======
 
     }
 
@@ -82,7 +54,6 @@ public class NewSerialPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::getSerial
                         , Throwable::printStackTrace);
->>>>>>> origin/dev
 
 /*
         io.reactivex.Observable.fromIterable(serialsDB).flatMap(i -> newSeriesModel.serials.reposSerials(i.get_idSerials()))
@@ -99,15 +70,6 @@ public class NewSerialPresenter {
 
     }
 
-<<<<<<< HEAD
-    private void getSerial(List<Result> results) {
-
-        getDbSerie();
-        for (int i = 0; i < results.size(); i++) {
-            for (int id = 0; id < seriesDB.size(); id++) {
-                for (int j = 0; j < results.get(i).getEpisodes().size(); j++) {
-
-=======
 
     List<Result> results = new ArrayList<>();
 
@@ -119,7 +81,6 @@ public class NewSerialPresenter {
         for (int i = 0; i < results.size(); i++) {
             for (int id = 0; id < seriesDB.size(); id++) {
                 for (int j = 0; j < results.get(i).getEpisodes().size(); j++) {
->>>>>>> origin/dev
                     if (results.get(i).getEpisodes().get(j).getId() == seriesDB.get(id).get_idSerials()
                             && results.get(i).getEpisodes().get(j).getEpisode_number() == seriesDB.get(id).getSeriesNumber()
                             && results.get(i).getEpisodes().get(j).getSeason_number() == seriesDB.get(id).getSeasonNumber()) {
@@ -146,60 +107,6 @@ public class NewSerialPresenter {
                 }
             }
         }
-<<<<<<< HEAD
-        viwe.setEpisod(results, flag);
-        flag = false;
-    }
-
-
-    /*
-        List<Result> results = new ArrayList<>();
-
-        private void getSerial(Result result) {
-            results = new ArrayList<>();
-            results.add(result);
-            getDbSerie();
-            Log.d("ser",result.getName());
-            for (int i = 0; i < results.size(); i++) {
-                for (int id = 0; id < seriesDB.size(); id++) {
-                    for (int j = 0; j < results.get(i).getEpisodes().size(); j++) {
-                        if (results.get(i).getEpisodes().get(j).getId() == seriesDB.get(id).get_idSerials()
-                                && results.get(i).getEpisodes().get(j).getEpisode_number() == seriesDB.get(id).getSeriesNumber()
-                                && results.get(i).getEpisodes().get(j).getSeason_number() == seriesDB.get(id).getSeasonNumber()) {
-                            results.get(i).getEpisodes().remove(j);
-                        }
-                    }
-                }
-
-                if (results.get(i).getEpisodes().size() == 0) {
-                    results.remove(i);
-                    i = -1;
-
-                } else {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-                    try {
-                        Date date = format.parse(results.get(i).getEpisodes().get(0).getAir_date());
-                        if (System.currentTimeMillis() <= date.getTime()) {
-                            results.remove(i);
-                            i = -1;
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            viwe.setEpisod(results);
-        }
-    */
-    public int getDbSerial() {
-        serialsDB = new ArrayList<>();
-        DaoSerials daoSerials = new DaoSerials();
-        serialsDB.addAll(daoSerials.select());
-        if (serialsDB.size() == 0)
-            return 0;
-        return serialsDB.size();
-=======
         viwe.setEpisod(results);
     }
 
@@ -207,7 +114,6 @@ public class NewSerialPresenter {
         serialsDB = new ArrayList<>();
         DaoSerials daoSerials = new DaoSerials();
         serialsDB.addAll(daoSerials.select());
->>>>>>> origin/dev
     }
 
     public void getDbSeasons() {
