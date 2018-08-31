@@ -28,21 +28,14 @@ import io.reactivex.schedulers.Schedulers;
 public class NewSerialPresenter {
     private NewSerialViwe viwe;
     private NewSeriesModel newSeriesModel;
-<<<<<<< HEAD
     private ArrayList<SerialsDB> serialsDB;
     private ArrayList<SeriesDB> seriesDB;
     private ArrayList<SeasonsDB> seasonsDB;
     private boolean flag = true;
-=======
-    ArrayList<SerialsDB> serialsDB;
-    ArrayList<SeriesDB> seriesDB;
-    ArrayList<SeasonsDB> seasonsDB;
->>>>>>> origin/dev
 
     public NewSerialPresenter(NewSerialViwe viwe) {
         this.viwe = viwe;
         newSeriesModel = new NewSeriesModel();
-<<<<<<< HEAD
         getDbSerial();
         getDbSeasons();
     }
@@ -62,27 +55,6 @@ public class NewSerialPresenter {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::getSerial
                             , Throwable::printStackTrace);
-=======
-
-    }
-
-
-    public void getDetalisSeasons() {
-        getDbSerial();
-        getDbSeasons();
-
-        io.reactivex.Observable.fromIterable(serialsDB).flatMap(i -> newSeriesModel.serials.reposSerials(i.get_idSerials()))
-                .subscribeOn(Schedulers.io())
-                .flatMap(seriasl -> io.reactivex.Observable.range(1, seriasl.getNumber_of_seasons())
-                        .subscribeOn(Schedulers.io()).flatMap(t -> (
-                                newSeriesModel.detalisSesons.reposDetalisSeasons(seriasl.getId(), t))), (seriasl, genres) -> {
-                    genres.setOriginal_name(seriasl.getName());
-                    return genres;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::getSerial
-                        , Throwable::printStackTrace);
->>>>>>> origin/dev
 
 /*
         io.reactivex.Observable.fromIterable(serialsDB).flatMap(i -> newSeriesModel.serials.reposSerials(i.get_idSerials()))
@@ -99,7 +71,6 @@ public class NewSerialPresenter {
 
     }
 
-<<<<<<< HEAD
     private void getSerial(List<Result> results) {
 
         getDbSerie();
@@ -107,19 +78,6 @@ public class NewSerialPresenter {
             for (int id = 0; id < seriesDB.size(); id++) {
                 for (int j = 0; j < results.get(i).getEpisodes().size(); j++) {
 
-=======
-
-    List<Result> results = new ArrayList<>();
-
-    private void getSerial(Result result) {
-        results = new ArrayList<>();
-        results.add(result);
-        getDbSerie();
-        Log.d("ser",result.getName());
-        for (int i = 0; i < results.size(); i++) {
-            for (int id = 0; id < seriesDB.size(); id++) {
-                for (int j = 0; j < results.get(i).getEpisodes().size(); j++) {
->>>>>>> origin/dev
                     if (results.get(i).getEpisodes().get(j).getId() == seriesDB.get(id).get_idSerials()
                             && results.get(i).getEpisodes().get(j).getEpisode_number() == seriesDB.get(id).getSeriesNumber()
                             && results.get(i).getEpisodes().get(j).getSeason_number() == seriesDB.get(id).getSeasonNumber()) {
@@ -146,7 +104,6 @@ public class NewSerialPresenter {
                 }
             }
         }
-<<<<<<< HEAD
         viwe.setEpisod(results, flag);
         flag = false;
     }
@@ -199,15 +156,6 @@ public class NewSerialPresenter {
         if (serialsDB.size() == 0)
             return 0;
         return serialsDB.size();
-=======
-        viwe.setEpisod(results);
-    }
-
-    public void getDbSerial() {
-        serialsDB = new ArrayList<>();
-        DaoSerials daoSerials = new DaoSerials();
-        serialsDB.addAll(daoSerials.select());
->>>>>>> origin/dev
     }
 
     public void getDbSeasons() {
